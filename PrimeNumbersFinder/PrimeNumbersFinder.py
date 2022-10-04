@@ -1,4 +1,8 @@
+from dataclasses import replace
 import os           #For clearing the console
+import time
+
+
 
 Count = 0           #The main iterator
 NumsToCheck = 0     #The amount of numbers to check
@@ -55,7 +59,13 @@ while True:
     os.system("cls")
     print ("Searching...")
 
-    f= open("PrimeNumbers.txt","w+")
+    # Open a file to save to
+    t = str(time.ctime())
+    t = t.replace("  ", "_")
+    t = t.replace(" ", "_")
+    t = t.replace(":", ".")
+    f = open(f"PrimeNumbers_{t}.txt","w+")
+
     NumToStopAt = Count + NumsToCheck
 
     #Checking the specified numbers
@@ -68,4 +78,4 @@ while True:
         Count += 1
 
     f.close()
-    print ("\nLog file \"PrimeNumbers.text\" created. You may continue to search for numbers, however doing this will overwrite your output file.\n\n")
+    print ("\nLog file \"PrimeNumbers.text\" created. You may continue to search for numbers:\n\n")
