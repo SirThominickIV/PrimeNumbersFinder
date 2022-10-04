@@ -8,17 +8,21 @@ NumToStopAt = 0     #The number that the program will stop checking at
 def IsPrime(num):
     divisor = 2
     halfnum = num/2
+
+    # Do a quick check for edge cases
     if num == 2:
         return True
     if num == 1:
-        return False    
+        return False  
+
+    #Begin main calculation loop  
     while True:
-        if num % divisor == 0:
+        if num % divisor == 0:      # If this number is wholey divisible by a number smaller than half of itself, then it cannot be a prime.
             return False
         else:
             divisor += 1
-            if divisor > halfnum:
-                return True
+            if divisor > halfnum:   # If the divisor has surpassed half of the size of the num in question, then the rest of the divisors can't
+                return True         # possibly be divisible to 0.
             
 
 #Main Loop
