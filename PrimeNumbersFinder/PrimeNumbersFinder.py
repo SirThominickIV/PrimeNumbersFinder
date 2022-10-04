@@ -1,8 +1,5 @@
-from dataclasses import replace
 import os           #For clearing the console
-import time
-
-
+import time         #For path creation
 
 Count = 0           #The main iterator
 NumsToCheck = 0     #The amount of numbers to check
@@ -10,14 +7,9 @@ NumToStopAt = 0     #The number that the program will stop checking at
 
 #Checks to see if a given number is prime
 def IsPrime(num):
+
     divisor = 2
     halfnum = num/2
-
-    # Do a quick check for edge cases
-    if num == 2:
-        return True
-    if num == 1:
-        return False  
 
     #Begin main calculation loop  
     while True:
@@ -28,7 +20,6 @@ def IsPrime(num):
             if divisor > halfnum:   # If the divisor has surpassed half of the size of the num in question, then the rest of the divisors can't
                 return True         # possibly be divisible to 0.
             
-
 #Main Loop
 while True:
     NumsFound = 0
@@ -37,7 +28,7 @@ while True:
     while True:
             try:
                 Count = int(input("Please enter the number you wish to start searching at:\n>"))
-                if Count > 0:
+                if Count >= 0:
                     break
                 else:
                     print ("Invalid input, please enter a number higher than 1:\n")
@@ -48,7 +39,7 @@ while True:
     while True:
             try:
                 NumsToCheck = int(input("Please enter the amount of numbers you wish to check:\n>"))
-                if NumsToCheck > 0:
+                if NumsToCheck >= 0:
                     break
                 else:
                     print ("Invalid input, please enter a number higher than 1:\n")
@@ -66,16 +57,30 @@ while True:
     t = t.replace(":", ".")
     f = open(f"PrimeNumbers_{t}.txt","w+")
 
-    NumToStopAt = Count + NumsToCheck
+    #Manually get through the edge cases that IsPrime can't/shouldn't do for optimization sake
+    if Count == 0:
+        Count += 1
+        NumsToCheck -= 1
+    if Count == 1:
+        Count += 1
+        NumsToCheck -= 1
+    if Count == 2:
+        print(str(Count))
+        f.write(str(Count) + "\n")
+        NumsFound += 1
+        Count += 1
+        NumsToCheck -= 1
 
     #Checking the specified numbers
-    while True:
+    NumToStopAt = Count + NumsToCheck
+    while Count < NumToStopAt:
+
         if IsPrime(Count):
             print(str(Count))
             f.write(str(Count) + "\n")
-        if Count >= NumToStopAt:
-            break
+            NumsFound += 1
+
         Count += 1
 
     f.close()
-    print ("\nLog file \"PrimeNumbers.text\" created. You may continue to search for numbers:\n\n")
+    print (f"\nLog file \"PrimeNumbers_{t}.txt\" created.\n{NumsFound} prime numbers were found.\nYou may continue to search for numbers:\n\n")
